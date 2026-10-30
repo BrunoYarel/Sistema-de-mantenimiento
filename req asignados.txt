@@ -1,0 +1,6 @@
+req 6 y 8 Gabriel
+req 3 y 4 Cristian
+req 1 y 2 oscar
+req 9 y 10 yimi
+req 11 y 12 oscar
+req 5 y 7 bruno
