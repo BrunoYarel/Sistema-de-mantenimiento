@@ -1,0 +1,13 @@
+/backend/nucleo/            @BrunoYarel
+/database/migraciones/      @BrunoYarel
+/database/grants.sql        @BrunoYarel
+/database/dev/              @BrunoYarel
+/docker/                    @BrunoYarel
+/docker-compose.yml         @BrunoYarel
+/bin/                       @BrunoYarel
+/frontend/js/nucleo/        @BrunoYarel
+/frontend/js/app.js         @BrunoYarel
+/frontend/js/config.js      @BrunoYarel
+/.github/                   @BrunoYarel
+/.gitignore                 @BrunoYarel
+/.gitattributes             @BrunoYarel
