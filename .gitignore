@@ -1,0 +1,16 @@
+# .gitignore (raíz del repo)
+.env
+.env.*
+!.env.example
+node_modules/
+vendor/
+storage/
+backups/
+*.sql.gz
+*.dump
+*.bak
+.DS_Store
+Thumbs.db
+*.log
+.vscode/
+.idea/

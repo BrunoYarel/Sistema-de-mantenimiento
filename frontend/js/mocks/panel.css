@@ -1,0 +1,509 @@
+/* frontend/js/mocks/panel.css */
+/* Panel de datos de prueba (solo localhost). Prefijo de clases: mk-. Colores solo con variables de base.css.
+
+   Diseño: un botón "Acceso rápido" (con una llave) en la esquina. Al pulsarlo se abre una tarjeta
+   angosta con los roles por su nombre: un clic en un rol = entrar con ese perfil.
+   "Más opciones" abre un panel lateral a la derecha de la tarjeta (otros perfiles, clave,
+   reiniciar datos, cerrar sesión). En pantallas angostas ese panel sube encima de la tarjeta.
+
+   Movimiento: todo comparte DOS curvas (abajo) y duraciones cortas, para que se sienta un solo
+   lenguaje. Lo que sale se va rápido y lo que llega frena largo; nada rebota ni se estira.
+   El cambio de perfil NO congela la pantalla: ver "Cambio de perfil" más abajo. */
+
+:root {
+  --mk-frenado: cubic-bezier(.22, 1, .36, 1);   /* movimiento: arranca rápido y frena largo (ease-out quint) */
+  --mk-fundido: cubic-bezier(.33, 1, .68, 1);   /* transparencia y colores: más suave (ease-out cúbico) */
+  --mk-atenuado: .22;  /* un parpadeo más fino: menos apagón y más natural */
+}
+
+/* El scrollbar de la ventana aparece o desaparece según lo larga que sea cada pantalla (15-17 px en
+   Windows). Sin reservar su hueco, al cambiar de perfil todo el contenido se corre de lado esos píxeles
+   (el "salto" horizontal, y la copia de la pantalla anterior queda desalineada con la nueva).
+   "scrollbar-gutter: stable" sobre <html> NO es fiable (en Chromium no llegó a reservar el hueco en la
+   ventana), así que se fuerza el scrollbar vertical: el ancho útil es siempre el mismo.
+   Este CSS solo se carga con los mocks activos, así que la app real no cambia. */
+html {
+  scrollbar-gutter: stable;
+  overflow-y: scroll;
+}
+
+.mk-panel {
+  position: fixed;
+  inset: auto auto var(--espacio) var(--espacio);
+  z-index: 40;
+  display: flex;
+  align-items: flex-end;
+  gap: .5rem;
+  max-width: calc(100vw - 2 * var(--espacio));
+  font-size: .85rem;
+  line-height: 1.4;
+}
+
+/* Pantallas bajitas: el login casi llena la altura; se deja un hueco abajo para el botón. */
+@media (max-height: 560px) {
+  .mk-con-panel { padding-bottom: 3.5rem; }
+}
+
+/* ---------- Botón cerrado ---------- */
+.mk-boton {
+  display: inline-flex;
+  align-items: center;
+  gap: .45rem;
+  max-width: calc(100vw - 2 * var(--espacio));
+  padding: .4rem .85rem .4rem .7rem;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background: var(--color-primario-suave);
+  color: var(--color-primario-oscuro);
+  box-shadow: var(--sombra-tarjeta);
+  font: inherit;
+  font-size: .8rem;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: border-color .14s var(--mk-fundido), transform .22s var(--mk-frenado);
+}
+
+.mk-boton:hover { border-color: var(--color-primario); }
+.mk-boton:active { transform: scale(.97); transition-duration: .06s; }
+.mk-boton svg { flex: none; width: 1rem; height: 1rem; }
+
+/* Con sesión iniciada, el botón dice qué rol hay dentro */
+.mk-boton-estado {
+  padding: 0 .5rem;
+  border-radius: 999px;
+  background: var(--color-primario);
+  color: var(--color-superficie);
+  font-size: .72rem;
+}
+
+/* ---------- Tarjetas (principal y lateral) ---------- */
+.mk-caja,
+.mk-extras {
+  background: var(--color-superficie);
+  border: 1px solid var(--color-borde);
+  border-radius: calc(var(--radio) * 1.5);
+  box-shadow: var(--sombra-tarjeta);
+}
+
+.mk-caja {
+  flex: none;
+  width: min(17rem, calc(100vw - 2 * var(--espacio)));   /* 17rem: cabe "Soporte informática" + "en sesión" en una línea */
+  max-height: calc(100vh - 2 * var(--espacio));
+  max-height: calc(100dvh - 2 * var(--espacio));
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transform-origin: bottom left;
+}
+
+.mk-extras {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  gap: .85rem;
+  width: min(14rem, calc(100vw - 2 * var(--espacio)));
+  max-height: calc(100vh - 2 * var(--espacio));
+  max-height: calc(100dvh - 2 * var(--espacio));
+  padding: .8rem;
+  overflow-y: auto;
+}
+
+/* Las animaciones SOLO corren cuando panel.js pone una de estas clases (al abrir o cerrar).
+   Así, redibujar el panel al navegar no vuelve a animarlo ni lo hace parpadear.
+   Entrada: algo más larga y con frenado suave. Salida: corta, para que cerrar se sienta inmediato.
+   Si cambias las duraciones, ajusta SALIDA_MS en panel.js (hoy 100 ms). */
+.mk-boton.mk-entra   { animation: mk-aparece .14s var(--mk-fundido); }
+.mk-caja.mk-entra    { animation: mk-abre .2s var(--mk-frenado); }
+.mk-extras.mk-entra  { animation: mk-lado .2s var(--mk-frenado); }
+
+.mk-caja.mk-saliendo {
+  animation: mk-sale-caja .1s ease-in forwards;
+  pointer-events: none;
+}
+
+.mk-extras.mk-saliendo {
+  animation: mk-sale-lado .1s ease-in forwards;
+  pointer-events: none;
+}
+
+@keyframes mk-sale-caja {
+  to { opacity: 0; transform: translateY(.25rem) scale(.98); }
+}
+
+@keyframes mk-sale-lado {
+  to { opacity: 0; transform: translateX(-.35rem); }
+}
+
+@keyframes mk-aparece {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes mk-abre {
+  from { opacity: 0; transform: translateY(.3rem) scale(.98); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes mk-lado {
+  from { opacity: 0; transform: translateX(-.35rem); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes mk-lado-arriba {
+  from { opacity: 0; transform: translateY(.3rem); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes mk-sale-lado-arriba {
+  to { opacity: 0; transform: translateY(.25rem); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mk-boton,
+  .mk-caja,
+  .mk-extras { animation: none !important; transition: none; }
+}
+
+/* ---------- Cambio de perfil: un parpadeo con tres tiempos ----------
+   Mientras la app se redibuja cambia TODA la pantalla (menú, cabecera y contenido), así que el
+   parpadeo también la cubre entera. panel.js deja una copia inerte de la página (.mk-fantasma)
+   encima y oculta la real por detrás (todo lo que cuelga de <body> menos el panel).
+
+     1. BAJA   (html.mk-cambiando)  la copia se apaga casi del todo, rápido y con frenado: responde
+                                    al clic al instante y aterriza suave en --mk-atenuado.
+     2. SOSTIENE                    se queda abajo un instante (ATENUADO_MIN_MS en panel.js), para que
+                                    el apagón se lea como intencional y no como un titileo.
+     3. SUBE   (html.mk-vuelve)     la copia termina de irse rápido (sale con aceleración) y la pantalla
+                                    nueva, ya completa y actualizada, emerge desde el fondo con un
+                                    fundido más largo y suave. Primero se va lo viejo; después llega lo nuevo.
+
+   html.mk-con-copia indica que la copia sí se pudo crear; si no, solo se oculta #vista (plan B).
+   Si cambias estos tiempos, ajusta en panel.js: VUELVE_MS (≥ retraso + duración de "sube", hoy .02 s + .28 s)
+   y ATENUADO_MIN_MS (≥ duración de "baja" más un poco de sostén, hoy .12 s). */
+
+/* Página real: oculta mientras se redibuja (la copia ocupa su lugar) */
+html.mk-con-copia.mk-cambiando body:not(.mk-fantasma-cuerpo) > :not(.mk-panel):not(.mk-fantasma):not(script):not(style):not(link):not(template):not(noscript) {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* 3. SUBE: la nueva emerge (con un pequeño retraso para que lo viejo ya se esté yendo) */
+html.mk-con-copia.mk-vuelve body:not(.mk-fantasma-cuerpo) > :not(.mk-panel):not(.mk-fantasma):not(script):not(style):not(link):not(template):not(noscript) {
+  transition: opacity .24s var(--mk-fundido) .02s;
+}
+
+/* Plan B: sin copia, solo el contenido */
+html.mk-cambiando:not(.mk-con-copia) #vista { opacity: 0; }
+html.mk-vuelve:not(.mk-con-copia) #vista { transition: opacity .24s var(--mk-fundido) .02s; }
+
+/* Copia de la pantalla anterior (su interior es un clon de <body> con la clase mk-fantasma-cuerpo) */
+.mk-fantasma { z-index: 20; }
+
+/* 1. BAJA */
+html.mk-cambiando .mk-fantasma {
+  opacity: var(--mk-atenuado);
+  transition: opacity .14s var(--mk-frenado);
+}
+
+/* 3. SUBE: lo viejo se va rápido y acelerando */
+html.mk-vuelve .mk-fantasma {
+  opacity: 0;
+  transition: opacity .1s ease-in;
+}
+
+/* El "Cargando…" no se muestra nunca mientras el panel de pruebas está activo (ni al cambiar de
+   perfil ni al abrir módulos). Se oculta con visibility para que el hueco no salte. Los errores sí se ven.
+   Es el mismo ".estado" que panel.js considera "todavía cargando". */
+.mk-con-panel #vista .estado:not(.estado--error) { visibility: hidden; }
+
+/* Mientras se cambia de perfil cualquier error es pasajero (la pantalla anterior se está
+   reemplazando): no se enseña. Si el error es real, sigue ahí cuando termina el cambio y se ve. */
+html.mk-cambiando #vista .estado--error { visibility: hidden; }
+
+/* Por si base.css no define [hidden] con prioridad: los display:flex de arriba lo pisarían */
+.mk-panel [hidden] { display: none !important; }
+
+/* ---------- Cabecera ---------- */
+.mk-cabecera {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: .5rem;
+  padding: .75rem .5rem .6rem .85rem;
+}
+
+.mk-cabecera > div { min-width: 0; }
+
+.mk-cabecera h1 {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.3;
+}
+
+/* Siempre UNA línea: si "Sesión: <nombre largo>" se partiera en dos, la tarjeta (anclada abajo)
+   crecería hacia arriba y todo el panel saltaría al cambiar de perfil. El nombre completo va en title. */
+.mk-ayuda {
+  margin: 0;
+  font-size: .8rem;
+  color: var(--color-suave);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mk-cerrar {
+  flex: none;
+  width: 1.6rem;
+  height: 1.6rem;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radio);
+  background: transparent;
+  color: var(--color-suave);
+  font: inherit;
+  font-size: .95rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color .14s var(--mk-fundido), color .14s var(--mk-fundido);
+}
+
+.mk-cerrar:hover { background: var(--color-fondo); color: var(--color-texto); }
+
+.mk-cuerpo {
+  padding: 0 .5rem .5rem;
+  overflow-y: auto;
+}
+
+/* ---------- Roles ---------- */
+.mk-roles {
+  display: flex;
+  flex-direction: column;
+  gap: .1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.mk-rol {
+  position: relative;
+  isolation: isolate;          /* el resalte (::before, z-index -1) queda detrás del texto y encima del fondo del hover */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .5rem;
+  width: 100%;
+  padding: .4rem .6rem;
+  border: 1px solid transparent;
+  border-radius: var(--radio);
+  background: transparent;
+  color: var(--color-texto);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color .1s var(--mk-fundido), color .1s var(--mk-fundido);
+}
+
+.mk-rol:hover,
+.mk-rol:focus-visible { background: var(--color-primario-suave); color: var(--color-primario-oscuro); }
+
+/* Flecha que invita a hacer clic: aparece al pasar el cursor. Va fuera del flujo (a la derecha)
+   para poder desvanecerse sin mover la etiqueta "en sesión". Solo fundido: sin desplazamientos. */
+.mk-rol::after {
+  content: "\2192";
+  position: absolute;
+  top: 50%;
+  right: .6rem;
+  translate: 0 -50%;
+  color: var(--color-primario);
+  opacity: 0;
+  transition: opacity .1s var(--mk-fundido);
+  pointer-events: none;
+}
+
+.mk-rol:hover::after,
+.mk-rol:focus-visible::after { opacity: 1; }
+
+/* Resalte del rol activo (fondo + borde). Aparece de golpe en la fila nueva, sin transición ni
+   deslizamiento: lo más ligero. Vive en un ::before y se ve idéntico a un botón con fondo y borde
+   propios (inset:-1px lo hace cubrir también el borde del botón). */
+.mk-rol::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  z-index: -1;
+  border: 1px solid transparent;
+  border-radius: inherit;
+  background: transparent;
+  pointer-events: none;
+}
+
+.mk-rol--activo::before {
+  background: var(--color-primario-suave);
+  border-color: var(--color-primario);
+}
+
+/* El fondo del activo lo pone el resalte: así no se apilan dos capas iguales al pasar el cursor */
+.mk-rol--activo,
+.mk-rol--activo:hover,
+.mk-rol--activo:focus-visible {
+  background: transparent;
+  color: var(--color-primario-oscuro);
+  font-weight: 600;
+}
+
+/* En el activo la flecha no se muestra, aunque tenga el cursor encima */
+.mk-rol--activo::after,
+.mk-rol--activo:hover::after,
+.mk-rol--activo:focus-visible::after { opacity: 0; }
+
+.mk-rol--off,
+.mk-rol--off:hover {
+  background: transparent;
+  color: var(--color-suave);
+  cursor: not-allowed;
+}
+
+.mk-rol--off::after { content: none; }
+
+/* La altura de una fila NO puede depender de si está activa: la etiqueta "en sesión" no se parte
+   y, si algún día falta ancho, se recorta el nombre del rol (elipsis) en vez de crecer la fila. */
+.mk-rol > span:first-child {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mk-tag {
+  flex: none;
+  font-size: .72rem;
+  font-weight: 400;
+  color: var(--color-suave);
+  white-space: nowrap;
+}
+
+.mk-rol--activo .mk-tag { color: var(--color-primario); font-weight: 600; }
+
+@media (prefers-reduced-motion: reduce) {
+  .mk-rol,
+  .mk-rol::after { transition: none; }
+}
+
+/* ---------- "Más opciones": fila de la tarjeta principal ---------- */
+.mk-mas {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: .4rem;
+  padding: .45rem .6rem;
+  border: 0;
+  border-top: 1px solid var(--color-borde);
+  border-radius: 0 0 var(--radio) var(--radio);
+  background: transparent;
+  color: var(--color-suave);
+  font: inherit;
+  font-size: .8rem;
+  cursor: pointer;
+  transition: background-color .14s var(--mk-fundido), color .14s var(--mk-fundido);
+}
+
+.mk-mas:hover,
+.mk-mas[aria-expanded="true"] { background: var(--color-primario-suave); color: var(--color-primario-oscuro); }
+
+/* La flecha apunta hacia donde se abre el panel lateral */
+.mk-mas::after { content: "\203A"; font-size: 1.1rem; line-height: 1; }
+.mk-mas[aria-expanded="true"]::after { content: "\2039"; }
+
+/* ---------- Panel lateral ---------- */
+.mk-titulo {
+  margin: 0 0 .3rem;
+  font-size: .68rem;
+  font-weight: 600;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--color-suave);
+}
+
+.mk-fila {
+  display: flex;
+  gap: .4rem;
+  align-items: center;
+}
+
+.mk-fila select { flex: 1; min-width: 0; padding: .3rem .4rem; font-size: .8rem; }
+
+.mk-entrar { padding: .3rem .6rem; font-size: .8rem; }
+
+/* Clave: valor + botón Copiar en una sola fila */
+.mk-clave-valor {
+  flex: 1;
+  min-width: 0;
+  padding: .3rem .5rem;
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio);
+  background: var(--color-fondo);
+  color: var(--color-texto);
+  font-size: .8rem;
+  white-space: nowrap;
+}
+
+.mk-copiar { padding: .3rem .5rem; font-size: .8rem; }
+
+/* Acciones de datos y sesión */
+.mk-acciones {
+  display: flex;
+  flex-direction: column;
+  gap: .1rem;
+  margin: 0 -.35rem -.35rem;
+  padding-top: .45rem;
+  border-top: 1px solid var(--color-borde);
+}
+
+.mk-accion {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  padding: .35rem .5rem;
+  border: 0;
+  border-radius: var(--radio);
+  background: transparent;
+  color: var(--color-primario);
+  font: inherit;
+  font-size: .82rem;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color .14s var(--mk-fundido);
+}
+
+.mk-accion:hover { background: var(--color-fondo); }
+
+/* "Cerrar sesión" sin sesión: sigue ocupando su fila (el panel lateral no cambia de alto al entrar o
+   salir), pero apagada y sin acción. Mismo criterio que .mk-rol--off. */
+.mk-accion[aria-disabled="true"],
+.mk-accion[aria-disabled="true"]:hover {
+  background: transparent;
+  color: var(--color-suave);
+  cursor: not-allowed;
+}
+
+.mk-accion small {
+  font-size: .72rem;
+  color: var(--color-suave);
+}
+
+.mk-nota {
+  margin: 0;
+  padding: 0 .25rem .25rem;
+  font-size: .8rem;
+  color: var(--color-suave);
+}
+
+/* ---------- Pantallas angostas: el panel lateral sube encima de la tarjeta ---------- */
+@media (max-width: 640px) {
+  .mk-panel { flex-direction: column-reverse; align-items: flex-start; }
+  .mk-extras.mk-entra    { animation-name: mk-lado-arriba; }
+  .mk-extras.mk-saliendo { animation-name: mk-sale-lado-arriba; }
+}

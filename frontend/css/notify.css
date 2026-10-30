@@ -1,0 +1,104 @@
+/* frontend/css/notify.css */
+/* =====================================================================
+   Notificaciones flotantes (las dibuja js/nucleo/notify.js).
+   Prefijo de clases: nt-  (regla y lista en css/base.css).
+   Colores solo con las variables de base.css; este archivo se carga
+   DESPUÉS de base.css (ver index.html). Solo escritorio por ahora.
+   ===================================================================== */
+
+/* Contenedor de la pila. Es un popover (capa superior del navegador) para verse
+   también encima de un <dialog> modal; por eso se anulan los estilos que el
+   navegador le pone a todo popover. */
+.nt-pila {
+  position: fixed;
+  inset: auto var(--espacio) var(--espacio) auto;
+  z-index: 100;
+  width: min(24rem, calc(100vw - 2 * var(--espacio)));
+  max-height: calc(100vh - 2 * var(--espacio));
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  overflow: visible;
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+  pointer-events: none;      /* la pila vacía no tapa clics; cada notificación sí los recibe */
+}
+
+/* ---------- Una notificación ---------- */
+.nt-aviso {
+  pointer-events: auto;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: start;
+  gap: .65rem;
+  padding: .7rem .6rem .7rem .8rem;
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio);
+  background: var(--color-superficie);
+  color: var(--color-texto);
+  box-shadow: var(--sombra-tarjeta);
+}
+.nt-aviso--ok { background: var(--color-ok-fondo); }
+.nt-aviso--info { background: var(--color-primario-suave); }
+.nt-aviso--error { background: var(--color-error-fondo); border-color: var(--color-error-borde); }
+
+.nt-icono {
+  display: grid;
+  place-items: center;
+  width: 1.4rem;
+  height: 1.4rem;
+  border-radius: 50%;
+  font-size: .8rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--color-superficie);
+}
+.nt-aviso--ok .nt-icono { background: var(--color-ok); }
+.nt-aviso--info .nt-icono { background: var(--color-primario); }
+.nt-aviso--error .nt-icono { background: var(--color-error); }
+
+.nt-cuerpo { min-width: 0; }
+.nt-titulo { display: block; font-weight: 600; }
+.nt-mensaje { margin: 0; overflow-wrap: anywhere; }
+.nt-titulo + .nt-mensaje { font-size: .9rem; color: var(--color-suave); }
+
+.nt-contador {
+  margin-left: .35rem;
+  padding: 0 .4rem;
+  border-radius: 999px;
+  background: var(--color-neutro-fondo);
+  font-size: .75rem;
+  font-weight: 600;
+  color: var(--color-suave);
+}
+
+.nt-cerrar {
+  padding: 0 .4rem;
+  border: 0;
+  border-radius: var(--radio);
+  background: transparent;
+  font: inherit;
+  font-size: 1.25rem;
+  line-height: 1.4;
+  color: var(--color-suave);
+  cursor: pointer;
+}
+.nt-cerrar:hover { background: var(--color-neutro-fondo); color: var(--color-texto); }
+
+/* ---------- Entrada y salida ---------- */
+@keyframes nt-entrar {
+  from { opacity: 0; transform: translateX(1rem); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes nt-salir {
+  from { opacity: 1; transform: none; }
+  to { opacity: 0; transform: translateX(1rem); }
+}
+.nt-entrando { animation: nt-entrar .2s ease-out; }
+.nt-saliendo { animation: nt-salir .2s ease-in forwards; pointer-events: none; }   /* .2s = SALIDA_MS de notify.js */
+
+@media (prefers-reduced-motion: reduce) {
+  .nt-entrando, .nt-saliendo { animation: none; }
+}

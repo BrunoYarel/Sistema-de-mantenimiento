@@ -1,0 +1,7 @@
+# .gitattributes
+# Evita que Windows convierta los finales de linea (rompe bin/verificar.sh y las migraciones).
+* text=auto
+*.sh  text eol=lf
+*.sql text eol=lf
+*.php text eol=lf
+*.md  text eol=lf

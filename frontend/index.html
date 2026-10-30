@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mantenimiento</title>
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/notify.css">
+</head>
+<body>
+  <!-- Barra superior: app.js la muestra solo cuando hay sesión y llena el menú -->
+  <header id="barra" hidden>
+    <a class="marca" href="#/">Mantenimiento</a>
+    <nav id="menu" aria-label="Principal"></nav>
+    <div class="usuario">
+      <span id="usuario"></span>
+      <button id="salir" type="button" class="btn btn--texto">Salir</button>
+    </div>
+  </header>
+
+  <!-- Aquí el router dibuja la pantalla actual -->
+  <main id="vista"></main>
+
+  <noscript>Este sistema necesita JavaScript activado.</noscript>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,130 @@
+/* frontend/js/modulos/usuarios/usuarios.css */
+/* Estilos del módulo "usuarios". Prefijo de clases: us-  (regla y lista en css/base.css).
+   Solo lo propio de estas pantallas: lo reutilizable (.btn, .campo, .tabla, .alerta...) vive en css/base.css
+   y los colores salen de sus variables. */
+
+/* Cabecera de la lista: título y "Nuevo usuario" */
+.us-cabecera { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .5rem var(--espacio); margin-bottom: var(--espacio); }
+.us-cabecera h1 { margin: 0; }
+
+/* Un enlace con aspecto de botón: sin subrayado */
+.us-enlace { display: inline-block; text-decoration: none; }
+
+/* Filtros: una columna en teléfono, en fila cuando hay ancho */
+.us-filtros {
+  display: grid;
+  gap: 0 var(--espacio);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 1fr));
+  align-items: end;
+  padding: var(--espacio) var(--espacio) 0;
+  margin-bottom: var(--espacio);
+  background: var(--color-superficie);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio);
+}
+.us-filtros-botones { flex-direction: row; align-items: center; gap: .5rem; }
+
+/* Tabla */
+.us-tabla td { vertical-align: middle; }
+.us-tabla th { position: relative; }   /* ancla el texto oculto de la columna de acciones: sin esto estira la página en móvil */
+.us-fila-inactiva td { color: var(--color-suave); background: var(--color-fondo); }
+.us-yo { color: var(--color-suave); }
+.us-estados { display: flex; flex-wrap: wrap; gap: .25rem; }
+.us-acciones { white-space: nowrap; text-align: right; }
+.us-acciones > * { padding: .3rem .6rem; font-size: .9rem; }
+
+/* Texto solo para lectores de pantalla (encabezado de la columna de acciones) */
+.us-solo-lector { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+/* Etiquetas de estado: siempre con texto, nunca solo color */
+.us-etiqueta { display: inline-block; padding: .05rem .5rem; border: 1px solid var(--color-borde); border-radius: 999px; font-size: .8rem; white-space: nowrap; }
+.us-etiqueta--ok { background: var(--color-ok-fondo); border-color: var(--color-ok); color: var(--color-ok); }
+.us-etiqueta--error { background: var(--color-error-fondo); border-color: var(--color-error-borde); color: var(--color-error); }
+.us-etiqueta--neutro { background: var(--color-neutro-fondo); color: var(--color-suave); }
+
+/* Paginación */
+.us-paginas { display: flex; flex-wrap: wrap; align-items: center; gap: .25rem var(--espacio); margin-top: var(--espacio); color: var(--color-suave); font-size: .9rem; }
+
+/* ---------- Alta y edición ----------
+   Cabecera con avatar, formulario en una tarjeta con pie de acciones y, a su lado, un panel lateral
+   (acceso y estado de la cuenta al editar; cómo recibe su clave al crear). En teléfono el panel baja. */
+
+.us-volver { display: inline-block; margin-bottom: var(--espacio); font-size: .9rem; text-decoration: none; }
+.us-volver:hover { text-decoration: underline; }
+
+.us-encabezado { display: flex; align-items: center; gap: var(--espacio); margin-bottom: 1.5rem; }
+.us-encabezado h1 { margin: 0 0 .3rem; overflow-wrap: anywhere; }
+.us-avatar {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  background: var(--color-primario-suave);
+  color: var(--color-primario-oscuro);
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: .02em;
+  user-select: none;
+}
+.us-avatar--inactivo { background: var(--color-neutro-fondo); color: var(--color-suave); }
+.us-sub { display: flex; flex-wrap: wrap; align-items: center; gap: .35rem .5rem; margin: 0; color: var(--color-suave); font-size: .9rem; }
+
+/* Formulario a la izquierda, panel a la derecha cuando hay ancho */
+.us-disposicion { display: grid; gap: 1.5rem; align-items: start; }
+@media (min-width: 56rem) {
+  .us-disposicion { grid-template-columns: minmax(0, 1fr) 19rem; }
+  .us-lateral { position: sticky; top: var(--espacio); }
+}
+.us-lateral { display: grid; gap: var(--espacio); }
+
+/* Tarjeta del formulario: cuerpo con grupos y un pie con los botones */
+.us-formulario { background: var(--color-superficie); border: 1px solid var(--color-borde); border-radius: var(--radio); overflow: hidden; }
+.us-cuerpo { display: grid; gap: 1.5rem; padding: 1.25rem; }
+/* El aviso de error (.alerta, compartido) no suma margen dentro del cuerpo: lleva la clase propia us-sin-margen. */
+.us-cuerpo .us-sin-margen { margin: 0; }
+.us-grupo { display: grid; gap: .85rem; }
+.us-grupo + .us-grupo { padding-top: 1.5rem; border-top: 1px solid var(--color-borde); }
+.us-grupo h2 { margin: 0; font-size: 1.05rem; }
+
+/* Dos campos por fila cuando caben; si no, uno bajo otro */
+.us-rejilla { display: grid; gap: 1rem 1.25rem; align-items: start; grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); }
+/* Los .campo (compartido) de la rejilla no suman margen: el espacio lo da el gap de la rejilla. */
+.us-grupo > .us-rejilla > * { margin-bottom: 0; }
+.us-formulario input:focus, .us-formulario select:focus { border-color: var(--color-primario); }
+.us-formulario input:disabled, .us-formulario select:disabled { background: var(--color-neutro-fondo); color: var(--color-suave); cursor: not-allowed; }
+.us-opcional { font-weight: 400; color: var(--color-suave); }
+
+.us-pie { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: .5rem; padding: var(--espacio) 1.25rem; background: var(--color-fondo); border-top: 1px solid var(--color-borde); }
+.us-botones { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; }
+
+/* Paneles laterales (acceso, estado de la cuenta, clave) */
+.us-bloque { padding: 1.25rem; background: var(--color-superficie); border: 1px solid var(--color-borde); border-radius: var(--radio); }
+.us-bloque h2 { margin: 0 0 .5rem; font-size: 1.05rem; }
+.us-bloque p { margin: 0 0 var(--espacio); color: var(--color-suave); font-size: .9rem; }
+.us-bloque .us-botones { flex-direction: column; align-items: stretch; }
+.us-bloque--peligro { border-color: var(--color-error-borde); }
+.us-contorno { border-color: var(--color-primario); }
+.us-pasos { margin: 0; padding-left: 1.25rem; color: var(--color-suave); font-size: .9rem; }
+.us-pasos li + li { margin-top: .5rem; }
+
+/* Acciones destructivas (desactivar): se distinguen del botón normal sin redefinir .btn.
+   Los :not(:disabled) suben la especificidad por encima de .btn:hover. */
+.us-peligro:not(:disabled), .us-peligro:hover:not(:disabled) { background: var(--color-error); border-color: var(--color-error); color: var(--color-superficie); }
+.us-peligro:hover:not(:disabled) { opacity: .9; }
+.us-peligro-texto:not(:disabled) { color: var(--color-error); }
+.us-peligro-texto:hover:not(:disabled) { background: var(--color-error-fondo); }
+
+/* Diálogos (confirmar y clave temporal) */
+.us-dialogo { width: min(92vw, 26rem); padding: 1.25rem; border: 1px solid var(--color-borde); border-radius: var(--radio); background: var(--color-superficie); color: var(--color-texto); box-shadow: var(--sombra-tarjeta); }
+.us-dialogo::backdrop { background: color-mix(in srgb, var(--color-texto) 45%, transparent); }
+.us-dialogo h2 { margin: 0 0 .5rem; font-size: 1.15rem; }
+.us-dialogo-botones { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: .5rem; margin-top: var(--espacio); }
+
+/* Clave temporal: grande, fácil de leer y de seleccionar de un clic */
+.us-credencial { display: grid; grid-template-columns: auto 1fr; gap: .35rem .75rem; margin: var(--espacio) 0; }
+.us-credencial dt { color: var(--color-suave); }
+.us-credencial dd { margin: 0; }
+.us-clave { font-size: 1.15rem; letter-spacing: .05em; user-select: all; }
+.us-aviso-unica { background: var(--color-neutro-fondo); }

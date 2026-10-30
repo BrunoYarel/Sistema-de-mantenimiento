@@ -1,0 +1,12 @@
+{
+  "_ruta": "tests/matriz.json",
+  "_nota": "Matriz de permisos por rol escrita a mano desde la seccion 4. QA la mantiene; si discrepa con nucleo/Dominio.php se corrige Dominio.php.",
+  "roles": {
+    "docente": ["incidencia.ver", "incidencia.registrar_propia", "incidencia.confirmar", "equipo.elegir"],
+    "admin": ["incidencia.ver", "incidencia.registrar_propia", "incidencia.confirmar", "equipo.elegir"],
+    "soporte_tecnico": ["incidencia.ver", "incidencia.registrar_a_nombre", "incidencia.atender", "equipo.elegir", "equipo.gestionar", "equipo.historial", "autorizacion.solicitar"],
+    "soporte_informatica": ["incidencia.ver", "incidencia.registrar_a_nombre", "incidencia.atender", "equipo.elegir", "equipo.gestionar", "equipo.historial", "autorizacion.solicitar"],
+    "jefe_soporte": ["incidencia.ver", "incidencia.registrar_a_nombre", "incidencia.priorizar", "incidencia.asignar", "incidencia.cerrar_sin_confirmacion", "equipo.elegir", "equipo.gestionar", "equipo.historial", "equipo.dar_de_baja", "autorizacion.solicitar", "indicadores.ver", "sede.todas"],
+    "jefe_informatica": ["incidencia.ver", "equipo.gestionar", "equipo.historial", "autorizacion.decidir", "indicadores.ver", "usuario.gestionar", "sede.todas"]
+  }
+}
