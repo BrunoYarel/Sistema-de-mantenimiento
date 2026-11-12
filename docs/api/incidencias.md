@@ -1,7 +1,7 @@
 <!-- docs/api/incidencias.md -->
 # API de `incidencias`
 
-Estado: contrato definido, pendiente de aprobación del líder (P1: se aprueba antes de codificar); las rutas aún no están implementadas. Ya ofrece a otros módulos `Servicio::abiertasDeTecnico` (ver abajo)
+Estado: contrato definido y aprobado por el líder; las rutas aún no están implementadas. Ya ofrece a otros módulos `Servicio::abiertasDeTecnico` (ver abajo)
 Requisitos: RF-01, RF-02, RF-03, RF-05, RF-06, RF-07, RF-08, RN-06, RN-09
 Permisos del catálogo: `incidencia.*`
 
