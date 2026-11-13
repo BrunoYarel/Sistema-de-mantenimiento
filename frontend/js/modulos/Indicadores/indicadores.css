@@ -1,0 +1,102 @@
+/* frontend/js/modulos/indicadores/indicadores.css */
+/* Estilos del módulo "indicadores". Prefijo reservado en css/base.css: ix-
+   Colores solo con las variables de css/base.css; lo compartido (.btn, .estado...) no se redefine aquí. */
+
+.ix-filtros {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--espacio);
+  margin-bottom: var(--espacio);
+}
+
+.ix-campo {
+  display: flex;
+  flex-direction: column;
+  gap: .25rem;
+  font-size: .9rem;
+  font-weight: 600;
+}
+
+.ix-corte {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .75rem;
+  margin-bottom: var(--espacio);
+  padding: .5rem .75rem;
+  background: var(--color-superficie);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio);
+}
+
+.ix-sello {
+  padding: .1rem .6rem;
+  border-radius: 999px;
+  font-size: .85em;
+  background: var(--color-neutro-fondo);
+  border: 1px solid var(--color-borde);
+}
+
+.ix-sello--cerrado {
+  font-weight: 600;
+  background: var(--color-ok-fondo);
+  color: var(--color-ok);
+}
+
+.ix-tarjetas {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: var(--espacio);
+}
+
+.ix-tarjeta {
+  padding: var(--espacio);
+  background: var(--color-superficie);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra-tarjeta);
+}
+
+.ix-tarjeta h2 {
+  margin: 0 0 .5rem;
+  font-size: 1rem;
+}
+
+.ix-cifra {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.ix-unidad {
+  font-size: .9rem;
+  font-weight: 400;
+  color: var(--color-suave);
+}
+
+.ix-nota {
+  margin: .25rem 0 .75rem;
+  font-size: .85em;
+  color: var(--color-suave);
+}
+
+.ix-lista {
+  margin: 0;
+  padding-left: 1.1rem;
+}
+
+.ix-sin-datos {
+  margin: 0;
+  font-size: 1.25rem;
+  font-style: italic;
+  color: var(--color-suave);
+}
+
+/* Reporte: al imprimir o guardar como PDF solo queda el contenido. */
+@media print {
+  .ix-filtros { display: none; }
+  .ix-tarjetas { grid-template-columns: 1fr 1fr; }
+  .ix-tarjeta { break-inside: avoid; box-shadow: none; }
+}

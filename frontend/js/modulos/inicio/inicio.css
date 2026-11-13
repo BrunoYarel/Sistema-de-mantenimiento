@@ -1,0 +1,45 @@
+/* frontend/js/modulos/inicio/inicio.css */
+/* Estilos del módulo "inicio". Prefijo de clases: in-  (regla y lista en css/base.css). */
+.in-bienvenida p { color: var(--color-suave); }
+.in-sede-actual strong { color: var(--color-texto); }
+
+/* Tarjetas de sede: una columna en teléfono (~360 px), dos cuando hay ancho */
+.in-sedes {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--espacio);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+}
+
+.in-sede {
+  display: flex;
+  flex-direction: column;
+  gap: .35rem;
+  min-height: 7rem;
+  padding: 1.25rem;
+  background: var(--color-superficie);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra-tarjeta);
+  color: var(--color-texto);
+  text-decoration: none;
+}
+.in-sede:hover { border-color: var(--color-primario); background: var(--color-primario-suave); }
+
+.in-sede-nombre { font-size: 1.35rem; font-weight: 700; }
+.in-sede-accion { margin-top: auto; font-size: .9rem; color: var(--color-primario-oscuro); }
+
+/* Filtro Todas / Sede 1 / Sede 2 (solo para quien ve "todas las sedes") */
+.in-filtro { display: flex; flex-wrap: wrap; gap: .25rem; margin: 0 0 var(--espacio); }
+.in-filtro-opcion {
+  padding: .4rem .9rem;
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio);
+  background: var(--color-superficie);
+  color: var(--color-suave);
+  text-decoration: none;
+}
+.in-filtro-opcion:hover { background: var(--color-fondo); }
+.in-filtro-opcion[aria-current="page"] { background: var(--color-primario-suave); border-color: var(--color-primario); color: var(--color-primario-oscuro); font-weight: 600; }

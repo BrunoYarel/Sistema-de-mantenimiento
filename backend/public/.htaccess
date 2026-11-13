@@ -1,0 +1,10 @@
+# backend/public/.htaccess
+# Apache: todo lo que llegue a esta carpeta lo atiende index.php.
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^ index.php [L]
+
+# Nunca servir archivos ocultos
+<FilesMatch "^\.">
+    Require all denied
+</FilesMatch>
