@@ -47,7 +47,7 @@ export function crearBd() {
     // Si tu módulo necesita más de una colección, agrega una línea por cada una.
     // get equipos() { return datos.equipos; },
     // get incidencias() { return datos.incidencias; },
-    // get autorizaciones() { return datos.autorizaciones; },
+     get autorizaciones() { return datos.autorizaciones; },
     // get indicadores() { return datos.indicadores; },
 
     // ----- Datos de apoyo del sistema -----

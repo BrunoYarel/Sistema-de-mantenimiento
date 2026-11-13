@@ -33,7 +33,7 @@ const MODULOS = {
 
   // equipos: () => import('./equipos/equipos.js'),
   // incidencias: () => import('./incidencias/incidencias.js'),
-  // autorizaciones: () => import('./autorizaciones/autorizaciones.js'),
+   autorizaciones: () => import('./autorizaciones/autorizaciones.js'),
   // indicadores: () => import('./indicadores/indicadores.js'),
 
 };

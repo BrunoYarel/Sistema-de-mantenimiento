@@ -22,7 +22,7 @@ import { ROL } from '../nucleo/dominio.js';
 // Súbelo (1 → 2 → 3...) cada vez que cambies CUALQUIER dato de este archivo, también los de tu módulo.
 // Si git marca conflicto en esta línea (dos compañeros la subieron a la vez), deja un número
 // MAYOR que los dos: así ningún navegador se queda con datos viejos de uno solo de ustedes.
-export const VERSION_SEMILLA = 1;
+export const VERSION_SEMILLA = 2;
 export const CLAVE_DEV = 'dev-clave-12345';
 
 // Los 6 perfiles "de siempre", uno por rol (rol → usuario). El panel los ofrece en su selector;
@@ -85,7 +85,38 @@ export function crearSemilla() {
     // lleva su propio id y la forma de datos de docs/api/<modulo>.md. Y sube VERSION_SEMILLA.
     // equipos: [],
     // incidencias: [],
-    // autorizaciones: [],
+    
+    autorizaciones: [
+        {
+          id: 1,
+          incidencia_id: 42,
+          equipo: 'PC-01',
+          tipo: 'compra',
+          justificacion: 'Fuente de poder dañada en laboratorio 2',
+          solicitante_id: 3,
+          solicitante: 'Soporte técnico de prueba',
+          estado: 'pendiente',
+          decidido_por: null,
+          motivo: null,
+          fecha_solicitud: '2026-11-10T08:40:00-05:00',
+          fecha_decision: null,
+        },
+        {
+          id: 2,
+          incidencia_id: 38,
+          equipo: 'IMP-04',
+          tipo: 'reparacion_externa',
+          justificacion: 'Rodillo fusor desgastado requiere servicio técnico autorizado',
+          solicitante_id: 5,
+          solicitante: 'Jefe de soporte de prueba',
+          estado: 'aprobada',
+          decidido_por: 'Jefe de informática de prueba',
+          motivo: 'Presupuesto aprobado para mantenimiento preventivo',
+          fecha_solicitud: '2026-11-08T10:15:00-05:00',
+          fecha_decision: '2026-11-09T14:20:00-05:00',
+        },
+      ],
+
     // indicadores: [],
   };
 }
