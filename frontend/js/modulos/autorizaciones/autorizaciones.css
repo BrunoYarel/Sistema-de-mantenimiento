@@ -1,0 +1,67 @@
+/* frontend/js/modulos/plantilla/plantilla.css */
+/* Estilos del módulo "plantilla". Prefijo de clases: pl-  (regla y lista en css/base.css).
+   Al copiar el módulo, cambia pl- por el prefijo que le toque a tu módulo en esa lista:
+   toda clase de este archivo empieza con él, los colores salen de las variables de
+   css/base.css y lo reutilizable (.btn, .tabla...) NO se redefine aquí.
+   Deja este archivo aunque esté vacío. */
+
+.au-filtros {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.au-badge {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border: 1px solid currentColor;
+}
+
+.au-tarjeta {
+  border: 1px solid var(--borde, currentColor);
+  border-radius: 6px;
+  padding: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
+.au-grilla {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.au-campo-etiqueta {
+  font-size: 0.8rem;
+  opacity: 0.75;
+  margin-bottom: 0.2rem;
+}
+
+.au-campo-valor {
+  font-weight: 600;
+}
+
+.au-decision-box {
+  border-top: 1px solid var(--borde, currentColor);
+  padding-top: 1rem;
+  margin-top: 1rem;
+}
+
+.au-acciones {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+.au-aviso-info {
+  padding: 0.75rem 1rem;
+  border-radius: 4px;
+  border: 1px solid currentColor;
+  margin-bottom: 1rem;
+}
+

@@ -50,15 +50,14 @@
 //    · Si tu atender() modifica datos (alta, edición, borrado), no hace falta guardar
 //      nada: servidor.js llama a bd.guardar() después de cada petición.
 // =====================================================================
+
 import { Errores } from '../servidor.js';
 
 export default {
   id: 'plantilla',
   rutas: [
-    // Lista: todo lo que haya en la base de prueba, sin permiso especial.
     { metodo: 'GET', ruta: '/plantilla/sedes', permiso: null, atender: ({ bd }) => bd.plantilla.map((i) => ({ ...i })) },
     {
-      // Detalle: ":id" llega en params.id; si no existe, 404 con el mensaje del contrato.
       metodo: 'GET',
       ruta: '/plantilla/sedes/:id',
       permiso: null,

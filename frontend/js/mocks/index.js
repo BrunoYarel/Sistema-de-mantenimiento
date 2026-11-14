@@ -77,9 +77,10 @@ import equipos from './handlers/equipos.js';
 import usuarios from './handlers/usuarios.js';
 import plantilla from './handlers/plantilla.js';
 import indicadores from './handlers/indicadores.js';
+import autorizaciones from './handlers/autorizaciones.js';
 
 // UNA línea por módulo con mock.
-const MODULOS = [auth, equipos, usuarios, plantilla, indicadores];
+const MODULOS = [auth, equipos, usuarios, plantilla, indicadores, autorizaciones];
 
 export function activar(config) {
   if (!EN_LOCAL) throw new Error('Los datos de prueba solo se activan en localhost.');
