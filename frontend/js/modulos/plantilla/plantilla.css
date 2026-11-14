@@ -1,0 +1,6 @@
+/* frontend/js/modulos/plantilla/plantilla.css */
+/* Estilos del módulo "plantilla". Prefijo de clases: pl-  (regla y lista en css/base.css).
+   Al copiar el módulo, cambia pl- por el prefijo que le toque a tu módulo en esa lista:
+   toda clase de este archivo empieza con él, los colores salen de las variables de
+   css/base.css y lo reutilizable (.btn, .tabla...) NO se redefine aquí.
+   Deja este archivo aunque esté vacío. */

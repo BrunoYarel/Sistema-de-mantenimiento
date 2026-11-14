@@ -1,0 +1,26 @@
+{
+  "_ruta": "tests/oraculo_acciones.json",
+  "_nota": "Escrito a mano desde las secciones 4 y 5 del documento de requisitos. NUNCA se genera desde el código. Lo amplía QA y lo revisa otra persona (RN-09, RF-12). Los casos de abajo son un punto de partida.",
+  "casos": [
+    { "caso": "jefe de soporte, Registrada: asigna y prioriza", "rol": "jefe_soporte", "estado": "registrada", "relaciones": [], "hechos": [], "esperadas": ["asignar", "cambiar_prioridad"] },
+    { "caso": "jefe de soporte, Asignada: reasigna y prioriza", "rol": "jefe_soporte", "estado": "asignada", "relaciones": [], "hechos": [], "esperadas": ["reasignar", "cambiar_prioridad"] },
+    { "caso": "jefe de soporte, En atención: reasigna, prioriza y puede solicitar autorización, pero no resuelve", "rol": "jefe_soporte", "estado": "en_atencion", "relaciones": [], "hechos": [], "esperadas": ["reasignar", "cambiar_prioridad", "solicitar_autorizacion"] },
+    { "caso": "jefe de soporte, En espera: reasigna y prioriza", "rol": "jefe_soporte", "estado": "en_espera", "relaciones": [], "hechos": [], "esperadas": ["reasignar", "cambiar_prioridad"] },
+    { "caso": "jefe de soporte, Resuelta sin plazo cumplido: nada", "rol": "jefe_soporte", "estado": "resuelta", "relaciones": [], "hechos": [], "esperadas": [] },
+    { "caso": "jefe de soporte, Resuelta con 3 hábiles cumplidos: cierra sin confirmación", "rol": "jefe_soporte", "estado": "resuelta", "relaciones": [], "hechos": ["cierre_vencido"], "esperadas": ["cerrar_sin_confirmacion"] },
+    { "caso": "jefe de soporte, Resuelta no reparable: da de baja", "rol": "jefe_soporte", "estado": "resuelta", "relaciones": [], "hechos": ["no_reparable"], "esperadas": ["dar_de_baja"] },
+    { "caso": "técnico asignado, Asignada: inicia la atención", "rol": "soporte_tecnico", "estado": "asignada", "relaciones": ["tecnico"], "hechos": [], "esperadas": ["iniciar_atencion"] },
+    { "caso": "técnico de informática NO asignado, Asignada: nada", "rol": "soporte_informatica", "estado": "asignada", "relaciones": [], "hechos": [], "esperadas": [] },
+    { "caso": "técnico asignado, En atención: resuelve o solicita autorización", "rol": "soporte_tecnico", "estado": "en_atencion", "relaciones": ["tecnico"], "hechos": [], "esperadas": ["resolver", "solicitar_autorizacion"] },
+    { "caso": "técnico asignado, En espera: espera la decisión, no hace nada", "rol": "soporte_tecnico", "estado": "en_espera", "relaciones": ["tecnico"], "hechos": [], "esperadas": [] },
+    { "caso": "técnico asignado, Resuelta con plazo vencido: no cierra (es del jefe)", "rol": "soporte_tecnico", "estado": "resuelta", "relaciones": ["tecnico"], "hechos": ["cierre_vencido"], "esperadas": [] },
+    { "caso": "jefe de informática, En espera: decide la autorización", "rol": "jefe_informatica", "estado": "en_espera", "relaciones": [], "hechos": [], "esperadas": ["decidir_autorizacion"] },
+    { "caso": "jefe de informática, Registrada: nada", "rol": "jefe_informatica", "estado": "registrada", "relaciones": [], "hechos": [], "esperadas": [] },
+    { "caso": "docente reportante titular, Resuelta: confirma o rechaza", "rol": "docente", "estado": "resuelta", "relaciones": ["reportante"], "hechos": [], "esperadas": ["confirmar_solucion", "rechazar_solucion"] },
+    { "caso": "administrativo reportante titular, Resuelta: confirma o rechaza", "rol": "admin", "estado": "resuelta", "relaciones": ["reportante"], "hechos": [], "esperadas": ["confirmar_solucion", "rechazar_solucion"] },
+    { "caso": "docente vinculado, Resuelta: solo puede rechazar (RN-06)", "rol": "docente", "estado": "resuelta", "relaciones": ["vinculado"], "hechos": [], "esperadas": ["rechazar_solucion"] },
+    { "caso": "docente sin relación con la incidencia, Resuelta: nada", "rol": "docente", "estado": "resuelta", "relaciones": [], "hechos": [], "esperadas": [] },
+    { "caso": "docente reportante, En atención: nada", "rol": "docente", "estado": "en_atencion", "relaciones": ["reportante"], "hechos": [], "esperadas": [] },
+    { "caso": "docente reportante, Resuelta con plazo vencido: no puede cerrar", "rol": "docente", "estado": "resuelta", "relaciones": ["reportante"], "hechos": ["cierre_vencido"], "esperadas": ["confirmar_solucion", "rechazar_solucion"] }
+  ]
+}

@@ -1,0 +1,172 @@
+/* frontend/js/modulos/equipos/equipos.css */
+/* Estilos del módulo "equipos". Prefijo de clases: eq-  (confírmalo en la lista de css/base.css).
+   Lo reutilizable (.btn, .tabla, .tabla-contenedor, .estado) NO se redefine aquí.
+   Los tonos salen de currentColor para heredar el tema de css/base.css; si base.css
+   define variables de color, cámbialas aquí por ellas. */
+
+.eq-cabecera {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.eq-acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+/* Filtros */
+.eq-filtros {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+  gap: 0.75rem;
+  margin: 1rem 0;
+}
+
+.eq-filtros label,
+.eq-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-weight: 600;
+}
+
+.eq-filtros input,
+.eq-filtros select,
+.eq-form input,
+.eq-form select,
+.eq-form textarea {
+  font: inherit;
+  font-weight: 400;
+  padding: 0.45rem 0.6rem;
+  max-width: 100%;
+}
+
+/* Formularios */
+.eq-form {
+  display: grid;
+  gap: 1rem;
+  max-width: 32rem;
+  margin: 1rem 0;
+}
+
+.eq-form small {
+  font-weight: 400;
+  opacity: 0.75;
+}
+
+.eq-error {
+  min-height: 1em;
+  font-weight: 600;
+  opacity: 1;
+}
+
+.eq-error:not(:empty)::before {
+  content: "⚠ ";
+}
+
+.eq-nota {
+  margin: 0.25rem 0 0;
+  opacity: 0.8;
+}
+
+.eq-nueva-ubicacion {
+  border: 1px dashed color-mix(in srgb, currentColor 40%, transparent);
+  border-radius: 0.4rem;
+  padding: 0.6rem 0.8rem;
+}
+
+.eq-nueva-ubicacion summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.eq-grid {
+  display: grid;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+/* Avisos (reemplazan al texto del contenedor [data-aviso]) */
+.eq-aviso {
+  margin: 0.75rem 0;
+  padding: 0.5rem 0.75rem;
+  border-left: 4px solid currentColor;
+  background: color-mix(in srgb, currentColor 8%, transparent);
+}
+
+.eq-aviso[hidden] {
+  display: none;
+}
+
+.eq-aviso--error {
+  font-weight: 600;
+}
+
+/* Ficha del equipo */
+.eq-datos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  gap: 1rem 1.5rem;
+  margin: 1rem 0 2rem;
+}
+
+.eq-datos dt {
+  font-size: 0.85rem;
+  opacity: 0.7;
+}
+
+.eq-datos dd {
+  margin: 0.1rem 0 0;
+  font-size: 1.05rem;
+}
+
+/* Criticidad: la jerarquía se marca con peso y subrayado, no solo con color */
+.eq-crit--alta {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.2em;
+}
+
+.eq-crit--baja {
+  font-weight: 400;
+}
+
+/* Insignias de estado */
+.eq-insignia {
+  display: inline-block;
+  padding: 0.05rem 0.5rem;
+  border: 1px solid color-mix(in srgb, currentColor 45%, transparent);
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  vertical-align: middle;
+}
+
+.eq-insignia--baja {
+  border-style: dashed;
+  opacity: 0.75;
+}
+
+/* Paginación y totales */
+.eq-paginador {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.eq-total {
+  margin: 0.5rem 0;
+  font-weight: 600;
+}
+
+@media (max-width: 40rem) {
+  .eq-acciones .btn {
+    flex: 1 1 100%;
+  }
+}
