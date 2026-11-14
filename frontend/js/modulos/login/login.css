@@ -1,0 +1,53 @@
+/* frontend/js/modulos/login/login.css */
+/* Estilos del módulo "login". Prefijo de clases: lg-  (regla y lista en css/base.css).
+   Solo lo propio de esta pantalla: lo reutilizable (.campo, .btn, .alerta...)
+   vive en css/base.css. */
+
+/* La barra superior está oculta sin sesión: centramos la tarjeta en la pantalla. */
+.lg-pagina {
+  min-height: calc(100vh - 2 * var(--espacio));
+  min-height: calc(100dvh - 2 * var(--espacio));
+  display: grid;
+  place-items: center;
+}
+
+.lg-tarjeta {
+  width: 100%;
+  max-width: 400px;
+  padding: 2rem 1.75rem;
+  background: var(--color-superficie);
+  border: 1px solid var(--color-borde);
+  border-radius: calc(var(--radio) * 1.5);
+  box-shadow: var(--sombra-tarjeta);
+}
+
+.lg-cabecera { text-align: center; margin-bottom: 1.5rem; }
+.lg-cabecera h1 { margin: .75rem 0 .25rem; }
+.lg-cabecera p { margin: 0; font-size: .9rem; color: var(--color-suave); }
+
+.lg-logo {
+  display: inline-grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background: var(--color-primario-suave);
+  color: var(--color-primario);
+}
+.lg-logo svg { width: 1.5rem; height: 1.5rem; }
+
+/* Campo de contraseña con el botón Mostrar/Ocultar dentro */
+.lg-clave { position: relative; }
+.lg-clave input { padding-right: 5.5rem; }
+.lg-ver {
+  position: absolute;
+  top: 50%;
+  right: .25rem;
+  transform: translateY(-50%);
+  padding: .25rem .6rem;
+  font-size: .85rem;
+}
+
+@media (max-width: 480px) {
+  .lg-tarjeta { padding: 1.5rem 1.25rem; }
+}

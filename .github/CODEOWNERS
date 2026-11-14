@@ -1,0 +1,22 @@
+# Nucleo del backend (la guia pide 2 aprobaciones)
+/backend/nucleo/                  @BrunoYarel
+
+# Base de datos
+/database/migraciones/            @BrunoYarel
+/database/grants.sql              @BrunoYarel
+/database/dev/                    @BrunoYarel
+
+# Infraestructura
+/docker-compose.yml               @BrunoYarel
+/docker/                          @BrunoYarel
+/bin/migrar.php                   @BrunoYarel
+
+# Frontend: configuracion, sesion, router y llamadas a la API
+/frontend/js/config.js            @BrunoYarel
+/frontend/js/nucleo/http.js       @BrunoYarel
+/frontend/js/nucleo/sesion.js     @BrunoYarel
+/frontend/js/nucleo/router.js     @BrunoYarel
+
+# Reglas del repositorio
+/.github/                         @BrunoYarel
+/.gitignore                       @BrunoYarel
